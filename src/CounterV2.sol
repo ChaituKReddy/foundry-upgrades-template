@@ -3,7 +3,8 @@ pragma solidity ^0.8.13;
 
 import {Initializable} from "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
-contract Counter is Initializable {
+/// @custom:oz-upgrades-from Counter
+contract CounterV2 is Initializable {
     uint256 public number;
 
     error Underflow();
@@ -11,10 +12,6 @@ contract Counter is Initializable {
     /// @custom:oz-upgrades-unsafe-allow constructor
     constructor() {
         _disableInitializers();
-    }
-
-    function initialize(uint256 newNumber) external initializer {
-        number = newNumber;
     }
 
     function increment() public {
@@ -26,5 +23,9 @@ contract Counter is Initializable {
             revert Underflow();
         }
         --number;
+    }
+
+    function resetNumber() public {
+        delete number;
     }
 }
