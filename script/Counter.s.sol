@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Script, console2} from "forge-std/Script.sol";
 import {Counter} from "../src/Counter.sol";
+import {CounterV2} from "../src/CounterV2.sol";
 import {Upgrades} from "openzeppelin-foundry-upgrades/Upgrades.sol";
 
 contract CounterScript is Script {
@@ -30,5 +31,8 @@ contract CounterScript is Script {
 
     function upgrade(address proxy) public {
         Upgrades.upgradeProxy(proxy, "CounterV2.sol:CounterV2", "");
+        CounterV2 counter = CounterV2(proxy);
+
+        counter.resetNumber();
     }
 }
